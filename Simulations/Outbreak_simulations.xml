@@ -1,0 +1,77 @@
+<beast version='2.0' namespace='master:master.model:master.steppers:master.conditions:master.outputs'>
+
+    <run spec='InheritanceTrajectory'
+		samplePopulationSizes="True"
+        verbosity='1'>
+
+        <model spec='Model' id='model'>
+
+			
+			<!--List of host population state names-->
+		
+			<population spec='Population' populationName="Animal_S" id='Animal_S'/>
+			
+			<population spec='Population' populationName="Human_S" id='Human_S'/>
+			
+			
+			<population spec='Population' populationName="Animal_I" id='Animal_I'/>
+	
+			<population spec='Population' populationName="Human_I" id='Human_I'/>
+			
+
+			<population spec='Population' populationName="Animal_R" id='Animal_R'/>
+			
+			<population spec='Population' populationName="Human_R" id='Human_R'/>
+			
+			
+			<!--List of reactions and by which "rate" they occur-->
+
+			<reaction spec='Reaction' rate="58" reactionName="Avian_removal">
+				Animal_I -> Animal_R
+			</reaction>			
+			
+			<reaction spec='Reaction' rate="12" reactionName="Human_removal">
+				Human_I -> Human_R
+			</reaction>
+
+			
+			<reaction spec='Reaction' rate="0.00000233" reactionName="Animal_to_Animal">
+                Animal_S + Animal_I -> 2Animal_I
+            </reaction>
+			
+			<reaction spec='Reaction' rate="0.0000024" reactionName="Human_to_Human">
+                Human_S + Human_I -> 2Human_I
+            </reaction>
+
+
+			<reaction spec='Reaction' rate="0.00000006" reactionName="Animal_to_Human">
+				Animal_I:1 + Human_S:2 -> Animal_I:1 + Human_I:1
+			</reaction>
+			
+			
+			<reaction spec='Reaction' rate="0.00000004" reactionName="Human_to_Animal">
+				Human_I:1 + Animal_S:2 -> Human_I:1 + Animal_I:1
+			</reaction>
+		
+			
+			
+        </model>
+		
+        <initialState spec='InitState'>
+		
+			<!--Host population where outbreak starts-->
+		    <lineageSeed spec='Individual' population='@Animal_I'/>
+			
+			<!-- Initial host susceptible population sizes -->
+			<populationSize spec='PopulationSize' size='25000000' population='@Animal_S'/>
+            <populationSize spec='PopulationSize' size='4600000' population='@Human_S'/>
+			
+        </initialState>
+	
+	<lineageEndCondition spec='LineageEndCondition' nLineages="0"/>
+	
+        <output spec='JsonOutput' fileName='$(filebase)_output.json'/>
+        <output spec='NexusOutput' fileName='$(filebase)_output.nexus'/>
+		<output spec='NewickOutput' fileName='$(filebase)_output.newick'/>
+    </run>
+</beast>
