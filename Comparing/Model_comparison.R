@@ -9,7 +9,7 @@ library("MASS", lib.loc="~/pathway/to/package/directory")
 Outbreaks <- c("Outbreak_directory_1", "Outbreak_directory_2", "Outbreak_directory_3")
 
 
-#List of the proportion of isolates from each sample that are from the animal population
+#List of the proportion of isolates from each simulation sample that are from the animal population
 Animal_sample_proportion <- c(0.04, 0.97, 0.96)
 
 Human_sample_proportion <- 1 - Animal_sample_proportion
